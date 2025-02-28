@@ -7,12 +7,13 @@
     "build": "webpack --config webpack.config.js",
     "start": "node dist/server.js",
     "dev": "nodemon",
-    "prepare": "husky"
+    "prepare": "husky",
+    "format-and-lint": "eslint --fix . && prettier --write ."
   },
   "lint-staged": {
     "**/*.{js,jsx,ts,tsx}": [
-      "eslint --fix",
-      "prettier --write"
+      "eslint --fix .",
+      "prettier --write ."
     ]
   },
   "keywords": [],

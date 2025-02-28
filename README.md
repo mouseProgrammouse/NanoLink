@@ -55,3 +55,16 @@ This runs the compiled code from the dist directory using Node.js.
 `ts-loader`: TypeScript loader for Webpack.
 `webpack-dev-middleware`: Middleware for serving Webpack bundles during development.
 `webpack-hot-middleware`: Middleware for enabling hot module replacement during development.
+
+### Code Quality: Linting, Formatting, and Pre-commit Hooks
+To maintain high code quality and consistency, this project uses the following tools:
+
+`ESLint` – Lints JavaScript/TypeScript files to catch errors and enforce best practices.
+`Prettier` – Automatically formats code to maintain a consistent style.
+`Husky` – Runs Git hooks to prevent commits that violate linting and formatting rules.
+
+To lint and format the code, run:
+
+```sh
+npm run format-and-lint
+```
