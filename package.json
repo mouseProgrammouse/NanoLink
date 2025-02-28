@@ -4,14 +4,26 @@
   "description": "This is a practice project to build a simple yet functional URL shortener.",
   "main": "index.js",
   "scripts": {
-    "dev": "parcel index.html --open",
-    "build": "parcel build index.html"
+    "build": "webpack --config webpack.config.js",
+    "start": "node dist/server.js",
+    "dev": "nodemon"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "dependencies": {
+    "express": "^4.21.2"
+  },
   "devDependencies": {
-    "parcel": "^2.13.3",
-    "typescript": "^5.7.3"
+    "@types/express": "^5.0.0",
+    "@types/node": "^22.13.5",
+    "nodemon": "^3.1.9",
+    "ts-loader": "^9.5.2",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.2",
+    "webpack": "^5.98.0",
+    "webpack-cli": "^6.0.1",
+    "webpack-dev-middleware": "^7.4.2",
+    "webpack-hot-middleware": "^2.26.1"
   }
 }
