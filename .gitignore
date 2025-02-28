@@ -1,9 +1,9 @@
 # Node.js dependencies
 node_modules/
 npm-debug.log*
+
 # Build output
 dist/
-.parcel-cache/
 
 # Editor/IDE files
 .vscode/

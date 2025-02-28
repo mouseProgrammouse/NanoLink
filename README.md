@@ -13,14 +13,33 @@ cd NanoLink
 npm install
 ```
 
-### Start Development Server (with Hot Reloading)
-This will start a local server and open the project in your default browser.
+### Development
+To start the development server with hot reloading:
 ```sh
 npm run dev
 ```
+This will start the server using nodemon, which watches for file changes and restarts the server automatically.
 
-### Build for Production
-This compiles TypeScript and optimizes files for production.
+### Production
+To build the project for production:
 ``` sh
 npm run build
 ```
+This compiles the TypeScript code and bundles it using Webpack, outputting the result to the dist directory.
+
+To start the production server:
+
+```sh
+npm start
+```
+This runs the compiled code from the dist directory using Node.js.
+
+### Dependencies
+`express`: Web framework for Node.js.
+`nodemon`: Utility that monitors for changes in source code and automatically restarts the server.
+`typescript`: TypeScript language support.
+`webpack`: Module bundler.
+`webpack-cli`: Command line interface for Webpack.
+`ts-loader`: TypeScript loader for Webpack.
+`webpack-dev-middleware`: Middleware for serving Webpack bundles during development.
+`webpack-hot-middleware`: Middleware for enabling hot module replacement during development.
