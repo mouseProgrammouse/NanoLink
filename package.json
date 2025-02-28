@@ -1,0 +1,17 @@
+{
+  "name": "nanolink",
+  "version": "1.0.0",
+  "description": "This is a practice project to build a simple yet functional URL shortener.",
+  "main": "index.js",
+  "scripts": {
+    "dev": "parcel index.html --open",
+    "build": "parcel build index.html"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "parcel": "^2.13.3",
+    "typescript": "^5.7.3"
+  }
+}
