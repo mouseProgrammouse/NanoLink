@@ -6,8 +6,15 @@
   "scripts": {
     "build": "webpack --config webpack.config.js",
     "start": "node dist/server.js",
-    "dev": "nodemon"
+    "dev": "nodemon",
+    "prepare": "husky"
   },
+  "lint-staged": {
+  "**/*.{js,jsx,ts,tsx}": [
+    "eslint --fix",
+    "prettier --write"
+  ]
+},
   "keywords": [],
   "author": "",
   "license": "ISC",
@@ -26,6 +33,8 @@
     "eslint-config-prettier": "^10.0.2",
     "eslint-plugin-prettier": "^5.2.3",
     "globals": "^16.0.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^15.4.3",
     "nodemon": "^3.1.9",
     "prettier": "^3.5.2",
     "ts-loader": "^9.5.2",
