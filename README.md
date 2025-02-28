@@ -13,9 +13,15 @@ cd NanoLink
 npm install
 ```
 
-### Start Development Server (with Hot Reloading)
-This will start a local server and open the project in your default browser.
+### Start Frontend Development Server (with Hot Reloading)
+This will start a local server and open the project in your default browser at at http://localhost:1234/.
 ```sh
+npm run dev
+```
+
+Run Backend
+```sh
+cd backend
 npm run dev
 ```
 
