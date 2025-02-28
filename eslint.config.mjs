@@ -9,5 +9,8 @@ export default [
   { languageOptions: { globals: globals.node } },
   pluginJs.configs.recommended,
   ...tseslint.configs.recommended,
-  prettier.configs.recommended,
+  {
+    plugins: { prettier },
+    rules: { ...prettier.configs.recommended.rules }, // Prettier recommended config
+  },
 ];
