@@ -2,19 +2,20 @@ import express from 'express';
 import path from 'path';
 import fs from 'fs';
 import webpack from 'webpack';
-const webpackDevMiddleware = require('webpack-dev-middleware');
-const webpackHotMiddleware = require('webpack-hot-middleware');
-const webpackConfig = require('../webpack.config.js');
+import webpackDevMiddleware from 'webpack-dev-middleware';
+import webpackHotMiddleware from 'webpack-hot-middleware';
+import type { Configuration } from 'webpack';
+import webpackConfig from '../webpack.config';
 
 const PORT = process.env.PORT || 3000;
 const app = express();
-const compiler = webpack(webpackConfig);
+const compiler = webpack(webpackConfig as Configuration);
 
 // Enable webpack middleware for hot-reloads in development
 app.use(
   webpackDevMiddleware(compiler, {
-    publicPath: webpackConfig.output.publicPath,
-  })
+    publicPath: webpackConfig?.output?.publicPath || '/',
+  }),
 );
 app.use(webpackHotMiddleware(compiler));
 
@@ -35,7 +36,10 @@ app.get('*', (req, res) => {
     const renderedContent = '<h1>Welcome to a Project Setup</h1>';
 
     return res.send(
-      data.replace('<div id="root"></div>', `<div id="root">${renderedContent}</div>`)
+      data.replace(
+        '<div id="root"></div>',
+        `<div id="root">${renderedContent}</div>`,
+      ),
     );
   });
 });
