@@ -1,3 +1,4 @@
+import * as dotenv from 'dotenv';
 import express from 'express';
 import path from 'path';
 import fs from 'fs';
@@ -6,6 +7,10 @@ import webpackDevMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
 import type { Configuration } from 'webpack';
 import webpackConfig from '../webpack.config';
+import linksRouter from './routes/linksRouter';
+import { closeDB } from './service/db';
+
+dotenv.config();
 
 const PORT = process.env.PORT || 3000;
 const app = express();
@@ -22,8 +27,10 @@ app.use(webpackHotMiddleware(compiler));
 // Serve static files from the public directory
 app.use(express.static(path.join(__dirname, '../../public')));
 
+app.use('/v1/links/', linksRouter);
+
 // Handle all GET requests
-app.get('*', (req, res) => {
+app.get('/', async (req, res) => {
   const indexFile = path.join(__dirname, './views', 'index.html');
 
   fs.readFile(indexFile, 'utf8', (err, data) => {
@@ -32,8 +39,8 @@ app.get('*', (req, res) => {
       return res.status(500).send('An error occurred');
     }
 
-    // Inject server-side rendered content if needed
-    const renderedContent = '<h1>Welcome to a Project Setup</h1>';
+    // Inject server-side rendered content
+    const renderedContent = `<p>Test Page</p>`;
 
     return res.send(
       data.replace(
@@ -44,6 +51,20 @@ app.get('*', (req, res) => {
   });
 });
 
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
   console.log(`Server is listening on port ${PORT}`);
 });
+
+// Graceful shutdown handler
+const shutdown = () => {
+  console.log('Received SIGINT. Shutting down gracefully...');
+  // Stop accepting new connections
+  server.close(() => {
+    console.log('HTTP server closed.');
+    // Close database
+    closeDB();
+    process.exit(0);
+  });
+};
+
+process.on('SIGINT', shutdown);
