@@ -17,6 +17,24 @@ cd NanoLink
 npm install
 ```
 
+### Database Setup
+This project uses a SQLite database. The setup script:
+
+Ensures the database directory exists (as defined by DATABASE_PATH in your .env file).
+Creates the database (using DATABASE_NAME from the .env file).
+A sample .env might look like this:
+
+`
+DATABASE_PATH=./data
+DATABASE_NAME=db.sqlite
+`
+To run the setup script (after adjusting your .env values if needed):
+
+```sh
+npm run setup-db
+```
+The script will create the database, create the urls table if it doesn’t already exist, and insert two sample records.
+
 ### Development
 
 To start the development server with hot reloading:
