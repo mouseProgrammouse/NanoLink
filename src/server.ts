@@ -29,7 +29,6 @@ app.use(express.static(path.join(__dirname, '../../public')));
 
 app.use('/v1/links/', linksRouter);
 
-// Handle all GET requests
 app.get('/', async (req, res) => {
   const indexFile = path.join(__dirname, './views', 'index.html');
 
@@ -44,8 +43,8 @@ app.get('/', async (req, res) => {
 
     return res.send(
       data.replace(
-        '<div id="root"></div>',
-        `<div id="root">${renderedContent}</div>`,
+        '<div id="data"></div>',
+        `<div id="data" data-shorten-url="${renderedContent}"></div>`,
       ),
     );
   });

@@ -1,0 +1,21 @@
+body {
+    font-family: 'Roboto', sans-serif;
+    font-size: 14px;
+}
+
+h1, h2, h3 {
+    font-family: 'League Spartan', sans-serif;
+    font-weight: 700;
+}
+
+h2 {
+    font-size: 34px;
+}
+
+.main {
+    display: flex;
+    flex-flow: column;
+    margin-top: 25%;
+    margin-left: 15%;
+    margin-right: 5%;
+}
