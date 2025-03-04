@@ -3,11 +3,28 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>URLs</title>
+    <title>Nano Link</title>
+    <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@700&family=Roboto:wght@400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/styles.css" />
   </head>
   <body>
-    <h3>Last URL from DB</h3>
-    <div id="root"></div>
+    <div class="main">
+      <h2>Your links, but shorter.</h3>
+      <p id="default">Paste a long URL below and get a short, shareable link in seconds.</p>
+      <p id="loading">Hang tight! We're shortening your link…</p>
+      <p id="done">Your short link is ready! Copy it and share it anywhere.</p>
+      <div id="link-form">
+        <input 
+          type="url" 
+          id="longUrl" 
+          name="longUrl" 
+          placeholder="Paste your long URL here…" 
+          required 
+        />
+        <button id="submitLink">Get Short Link</button>
+      </div>
+      <div id="data"></div>
+    </div>
     <script src="/bundle.js"></script>
   </body>
 </html>
