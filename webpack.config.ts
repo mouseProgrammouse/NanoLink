@@ -26,26 +26,19 @@ const config: Configuration = {
       },
       {
         test: /\.css$/,
-        use: [
-          MiniCssExtractPlugin.loader, // Extract CSS into separate files
-          'css-loader', // Translates CSS into JS modules
-        ],
+        use: [MiniCssExtractPlugin.loader, 'css-loader'],
       },
     ],
   },
   plugins: [
     new HotModuleReplacementPlugin(),
     new MiniCssExtractPlugin({
-      filename: 'styles.css', // The name of the output CSS file
+      filename: 'styles.css',
     }),
   ],
-  // Optionally optimize (minify) the CSS
   optimization: {
     minimize: true,
-    minimizer: [
-      '...', // This includes the default TerserPlugin for JS
-      new CssMinimizerPlugin(), // This will minify your extracted CSS
-    ],
+    minimizer: [new CssMinimizerPlugin()],
   },
 };
 
