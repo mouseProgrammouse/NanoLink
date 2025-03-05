@@ -11,22 +11,24 @@
     <div class="main">
       <h2>Your links, but shorter.</h3>
       <p id="defaultCopy">Paste a long URL below and get a short, shareable link in seconds.</p>
-      <p id="loaderCopy" class="hide">Hang tight! We're shortening your link…</p>
-      <p id="doneCopy" class="hide">Your short link is ready! Copy it and share it anywhere.</p>
+      <p id="loaderCopy" class="hide" aria-live="polite">Hang tight! We're shortening your link…</p>
+      <p id="doneCopy" class="hide" aria-live="polite">Your short link is ready! Copy it and share it anywhere.</p>
       <div id="linkForm">
         <div class="link-form">
+          <label for="longUrl" class="hide">Enter a long URL to shorten</label>
           <input 
             type="url" 
             id="longUrl" 
             name="longUrl" 
-            placeholder="Paste your long URL here…" 
+            placeholder="Paste your long URL here…"
+            aria-describedby="longUrlError"
           />
-          <button id="submitLink" disabled>Get Short Link</button>
+          <button id="submitLink" disabled aria-label="Generate short link">Get Short Link</button>
         </div>
-        <p id="longUrlError" class="error-msg-input error-msg">Oops! That doesn't look like a valid link. Please enter a proper URL, like https://example.com</p>
-        <p id="genericError" class="error-msg hide">Oops! Something went wrong. Give it another try in a moment.</p>
+        <p id="longUrlError" class="error-msg-input error-msg" role="alert">Oops! That doesn't look like a valid link. Please enter a proper URL, like https://example.com</p>
+        <p id="genericError" class="error-msg hide" role="alert">Oops! Something went wrong. Give it another try in a moment.</p>
       </div>
-      <div class="loading hide" id="loader">
+      <div class="loading hide" id="loader" aria-live="assertive" aria-label="Loading...">
         <span></span>
         <span></span>
         <span></span>
@@ -41,18 +43,21 @@
       </div>
       <div id="shortLinkForm" class="hide">
         <div class="link-form">
+          <label for="shortUrl" class="hide">Your shortened URL</label>
           <input 
             type="url" 
             id="shortUrl" 
             name="shortUrl"
           />
           <div class="copy">
-            <span>Copied!</span>
-            <button id="copyLink">Copy Link</button>
+            <span aria-live="assertive">Copied!</span>
+            <button id="copyLink" aria-label="Copy shortened link to clipboard">Copy Link</button>
           </div>
         </div>
       </div>
     </div>
+
+    
     <script src="/bundle.js"></script>
   </body>
 </html>

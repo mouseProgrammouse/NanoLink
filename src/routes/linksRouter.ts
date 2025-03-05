@@ -37,8 +37,9 @@ linksRouter.post(
   '/',
   jsonParser,
   (req: Request<{ longUrl: string }>, res: Response<LinkResponse>) => {
-    const shortUrl = generateShortCode(req.body.longUrl);
-    const longUrl = req.body.longUrl;
+    const longUrl = req.body.longUrl.replace(/^https?:\/\//i, '');
+    const shortUrl = generateShortCode(longUrl);
+    // TODO: we need to check if the record with shortUrl exists in DB
     addUrlRecord(shortUrl, longUrl)
       .then(() => {
         res.json({ shortUrl });
