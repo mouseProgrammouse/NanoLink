@@ -13,15 +13,17 @@
       <p id="default">Paste a long URL below and get a short, shareable link in seconds.</p>
       <p id="loading">Hang tight! We're shortening your link…</p>
       <p id="done">Your short link is ready! Copy it and share it anywhere.</p>
-      <div id="link-form">
-        <input 
-          type="url" 
-          id="longUrl" 
-          name="longUrl" 
-          placeholder="Paste your long URL here…" 
-          required 
-        />
-        <button id="submitLink">Get Short Link</button>
+      <div id="linkForm">
+        <div class="link-form">
+          <input 
+            type="url" 
+            id="longUrl" 
+            name="longUrl" 
+            placeholder="Paste your long URL here…" 
+          />
+          <button id="submitLink" disabled>Get Short Link</button>
+        </div>
+        <p id="longUrlError" class="error-msg">Oops! That doesn't look like a valid link. Please enter a proper URL, like https://example.com</p>
       </div>
       <div id="data"></div>
     </div>

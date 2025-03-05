@@ -10,12 +10,88 @@ h1, h2, h3 {
 
 h2 {
     font-size: 34px;
+    margin-bottom: 6px;
 }
 
 .main {
     display: flex;
     flex-flow: column;
-    margin-top: 25%;
-    margin-left: 15%;
-    margin-right: 5%;
+    position: relative;
+    top: calc(80vh - 130px);
+    left: 10vw;
+}
+
+.main p {
+    margin: 0;
+}
+
+.link-form {
+    margin-top: 18px;
+}
+
+.main #loading,
+.main #done {
+    display: none;
+}
+
+input[type="url"] {
+    width: 470px;
+    padding: 10px 10px 6px 10px;
+    font-size: 14px;
+    border: 1px solid #0000004D;
+    border-radius: 2px;
+    outline: none;
+    background-color: #d9d9d933;
+}
+
+input[type="url"]:focus {
+    border-color: #000000;
+}
+
+.link-form {
+    display: flex;
+    gap: 10px;
+}
+
+.error-msg {
+    font-size: 12px;
+    color: #760f0f;
+    padding-top: 2px;
+    display: none;
+}
+
+.error input[type="url"] {
+    border-color: #760f0f;
+}
+
+.error .error-msg {
+    display: block;
+}
+
+
+button {
+    background-color: #000000;
+    border-radius: 2px;
+    border: 1px solid #000000;
+    font-size: 14px;
+    font-weight: 600;
+    color: #ffffff;
+    padding: 6px 10px 2px 10px;
+    width: 185px;
+    text-align: left;
+}
+
+
+button:disabled {
+    background-color: #00000066;
+    border: 1px solid #00000070;
+    color: #ffffffcc;
+    pointer-events: none;
+}
+
+
+button:hover {
+    background-color: #d9d9d933;
+    border: 1px solid #000000;
+    color: #000000;
 }

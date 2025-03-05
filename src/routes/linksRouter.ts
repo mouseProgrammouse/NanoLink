@@ -1,8 +1,11 @@
 import express from 'express';
 import { Request, Response } from 'express';
 import { connectDB, getLastUrl } from '../service/db';
+import bodyParser from 'body-parser';
 
 const linksRouter = express.Router();
+
+const jsonParser = bodyParser.json();
 
 linksRouter.get(
   '/:shortUrl',
@@ -18,6 +21,15 @@ linksRouter.get(
         res.status(500).json({ error: 'An unknown error occurred' });
       }
     }
+  },
+);
+
+linksRouter.post(
+  '/',
+  jsonParser,
+  (req: Request, res: Response<{ shortUrl: string }>) => {
+    console.log('req-body:', req.body);
+    res.json({ shortUrl: 'hS88' });
   },
 );
 
