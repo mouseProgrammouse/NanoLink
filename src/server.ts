@@ -8,13 +8,15 @@ import webpackHotMiddleware from 'webpack-hot-middleware';
 import type { Configuration } from 'webpack';
 import webpackConfig from '../webpack.config';
 import linksRouter from './routes/linksRouter';
-import { closeDB } from './service/db';
+import { closeDB, connectDB } from './service/db';
 
 dotenv.config();
 
 const PORT = process.env.PORT || 3000;
 const app = express();
 const compiler = webpack(webpackConfig as Configuration);
+
+connectDB();
 
 // Enable webpack middleware for hot-reloads in development
 app.use(
