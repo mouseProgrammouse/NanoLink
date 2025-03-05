@@ -29,11 +29,6 @@ h2 {
     margin-top: 18px;
 }
 
-.main #loading,
-.main #done {
-    display: none;
-}
-
 input[type="url"] {
     width: 470px;
     padding: 10px 10px 6px 10px;
@@ -57,14 +52,17 @@ input[type="url"]:focus {
     font-size: 12px;
     color: #760f0f;
     padding-top: 2px;
-    display: none;
 }
 
 .error input[type="url"] {
     border-color: #760f0f;
 }
 
-.error .error-msg {
+.error-msg-input {
+    display: none;
+}
+
+.error .error-msg-input {
     display: block;
 }
 
@@ -94,4 +92,100 @@ button:hover {
     background-color: #d9d9d933;
     border: 1px solid #000000;
     color: #000000;
+}
+
+@keyframes loadingAnimation {
+    0% {
+        background-color: #D9D9D933;
+    }
+    100% {
+        background-color: black;
+    }
+}
+
+.loading {
+    display: flex;
+    flex-flow: row;
+    margin-top: 18px;
+}
+
+.loading span {
+    content: "";
+    width: 32px;
+    height: 32px;
+    display: block;
+    background-color: #D9D9D933;
+    margin-right: 12px;
+    border: 1px black solid;
+    border-radius: 2px;
+    animation: loadingAnimation 1s infinite alternate;
+}
+
+/* Add a delay to each span to create a wave effect */
+.loading span:nth-child(1) { animation-delay: 0s; }
+.loading span:nth-child(2) { animation-delay: 0.1s; }
+.loading span:nth-child(3) { animation-delay: 0.2s; }
+.loading span:nth-child(4) { animation-delay: 0.3s; }
+.loading span:nth-child(5) { animation-delay: 0.4s; }
+.loading span:nth-child(6) { animation-delay: 0.5s; }
+.loading span:nth-child(7) { animation-delay: 0.6s; }
+.loading span:nth-child(8) { animation-delay: 0.7s; }
+.loading span:nth-child(9) { animation-delay: 0.8s; }
+.loading span:nth-child(10) { animation-delay: 0.9s; }
+.loading span:nth-child(11) { animation-delay: 1s; }
+
+.copy {
+    position: relative;
+    display: flex;
+}
+.copy span {
+    position: absolute;
+    right: 42px;
+    top: -42px;
+    color: black;
+    background: white;
+    padding: 8px 24px;
+    border: 1px black solid;
+    border-radius: 2px;
+    font-size: 12px;
+    text-align: center;
+    white-space: nowrap;
+    opacity: 0;
+    font-weight: 600;
+    transform: translateY(0);
+    transition: opacity 0.3s ease-in-out;
+}
+
+/* Add a triangle at the bottom center */
+.copy span::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: -6px;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 6px solid black;
+}
+
+/* Jump Animation */
+@keyframes jump {
+    0% { transform: translateY(0); opacity: 0; }
+    20% { transform: translateY(-8px); opacity: 1; }
+    40% { transform: translateY(0); }
+    60% { transform: translateY(-4px); }
+    80% { transform: translateY(0); }
+    100% { opacity: 0; }
+}
+
+/* Trigger animation when span is active */
+.copy span.show {
+    animation: jump 1s ease-in-out;
+}
+
+.hide {
+    display: none;
+    opacity: 0;
 }

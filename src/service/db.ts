@@ -6,7 +6,8 @@ import { ENV_DEV } from '../utils/const';
 
 dotenv.config();
 
-const { DATABASE_PATH, DATABASE_NAME, ENV } = process.env;
+const { DATABASE_PATH, DATABASE_NAME } = process.env;
+
 if (!DATABASE_PATH || !DATABASE_NAME) {
   throw new Error(
     'DATABASE_PATH and DATABASE_NAME must be set in the environment.',
@@ -16,7 +17,8 @@ if (!DATABASE_PATH || !DATABASE_NAME) {
 const databasePath = path.join(DATABASE_PATH, DATABASE_NAME);
 
 // we will use a debug mode in dev mode
-const sqlite3Instance = ENV === ENV_DEV ? sqlite3.verbose() : sqlite3;
+const sqlite3Instance =
+  process.env.ENV === ENV_DEV ? sqlite3.verbose() : sqlite3;
 
 let db: Database | null = null;
 
@@ -54,6 +56,30 @@ export const getLastUrl = async (): Promise<UrlRecord> => {
 
       console.log('rows', rows);
       resolve(rows[0] as UrlRecord);
+    });
+  });
+};
+
+export const addUrlRecord = async (
+  shortUrl: string,
+  longUrl: string,
+): Promise<void> => {
+  return new Promise((resolve, reject) => {
+    if (!db) {
+      console.error('Database not initialized');
+      return reject(new Error('Database not initialized'));
+    }
+
+    const query =
+      'INSERT INTO urls (SHORT_URL, LONG_URL, DATE) VALUES (?, ?, DATETIME("now"))';
+    db.run(query, [shortUrl, longUrl], function (err) {
+      if (err) {
+        console.error('Database insert error:', err.message);
+        return reject(err);
+      }
+
+      console.log(`Inserted new record with ID: ${this.lastID}`);
+      resolve();
     });
   });
 };
