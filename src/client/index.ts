@@ -1,12 +1,15 @@
 import './styles.css';
 
+const SUPPORTED_ERRORS = new Set(['404']);
+const ERROR_DELAY = 6000;
+
 /**
  * Checks if a given string is a valid URL.
  *
  * @param {string} url - The URL string to validate.
  * @returns {boolean} - Returns `true` if the URL is valid, otherwise `false`.
  */
-export const isValidURL = (url: string) => {
+const isValidURL = (url: string) => {
   try {
     new URL(url);
     return true;
@@ -29,7 +32,25 @@ const copyLinkBtn = document.getElementById('copyLink') as HTMLButtonElement;
 const shortUrlInput = document.getElementById('shortUrl') as HTMLInputElement;
 
 const toggleElementVisibility = (element: HTMLElement, show: boolean) => {
+  if (!element) return;
   element.classList.toggle('hide', !show);
+};
+
+const showErrors = () => {
+  const params = new URLSearchParams(window.location.search);
+  const error = params.get('error');
+  if (error && SUPPORTED_ERRORS.has(error)) {
+    const errorElement = document.getElementById(
+      `${error}Error`,
+    ) as HTMLElement;
+    toggleElementVisibility(errorElement, true);
+
+    setTimeout(() => {
+      if (errorElement) {
+        errorElement.classList.add('hide');
+      }
+    }, ERROR_DELAY); // Auto-hide the error after 6 seconds
+  }
 };
 
 linkInput.addEventListener('input', () => {
@@ -104,3 +125,5 @@ ctaElement?.addEventListener('click', async () => {
     toggleElementVisibility(loaderCopy, false);
   }
 });
+
+showErrors();
