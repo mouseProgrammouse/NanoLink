@@ -5,7 +5,7 @@ import { addUrlRecord, getLongUrl, getShortUrl } from '../service/db';
 import bodyParser from 'body-parser';
 import { LinkResponse, LongUrl, ShortUrl } from '../utils/type';
 import { isEmpty, shortenURL } from '../utils/util';
-import { checkDataInCache, setDataInCache } from '../service/cache';
+import { getDataFromCache, setDataInCache } from '../service/cache';
 
 const linksRouter = express.Router();
 
@@ -21,7 +21,7 @@ linksRouter.get(
   async (req: Request<ShortUrl>, res: Response) => {
     try {
       console.log('Requested Short Url', req.params.shortUrl);
-      const dataFromCache = await checkDataInCache(req.params.shortUrl);
+      const dataFromCache = await getDataFromCache(req.params.shortUrl);
       if (dataFromCache) {
         const longUrlFromCache = JSON.parse(dataFromCache);
         console.log('Redirect to:', longUrlFromCache);

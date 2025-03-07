@@ -38,7 +38,7 @@ export const connectCache = (): Redis => {
  * @returns {Promise<string | null>} The cached data as a string, or null if not found.
  * @throws {Error} If Redis is not connected.
  */
-export const checkDataInCache = async (
+export const getDataFromCache = async (
   cacheKey: string,
 ): Promise<string | null> => {
   if (!redis) {
