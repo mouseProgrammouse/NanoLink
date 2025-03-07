@@ -10,6 +10,7 @@ import type { Configuration } from 'webpack';
 import webpackConfig from '../webpack.config';
 import linksRouter from './routes/linksRouter';
 import { closeDB, connectDB } from './service/db';
+import { closeCache, connectCache } from './service/cache';
 
 dotenv.config();
 
@@ -18,6 +19,7 @@ const app = express();
 const compiler = webpack(webpackConfig as Configuration);
 
 connectDB();
+connectCache();
 
 // Enable webpack middleware for hot-reloads in development
 app.use(
@@ -70,6 +72,8 @@ const shutdown = () => {
     console.log('HTTP server closed.');
     // Close database
     closeDB();
+    // Exit cache
+    closeCache();
     process.exit(0);
   });
 };

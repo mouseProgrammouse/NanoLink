@@ -20,3 +20,6 @@ npm-debug.log*
 # Database
 database/
 *.sqlite
+
+# Cache
+dump.rdb
