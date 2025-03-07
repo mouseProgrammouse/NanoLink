@@ -1,5 +1,20 @@
 import './styles.css';
-import { isValidURL } from './util';
+
+/**
+ * Checks if a given string is a valid URL.
+ *
+ * @param {string} url - The URL string to validate.
+ * @returns {boolean} - Returns `true` if the URL is valid, otherwise `false`.
+ */
+export const isValidURL = (url: string) => {
+  try {
+    new URL(url);
+    return true;
+  } catch (err) {
+    console.error('url validation:', err);
+    return false;
+  }
+};
 
 const ctaElement = document.getElementById('submitLink') as HTMLButtonElement;
 const linkInput = document.getElementById('longUrl') as HTMLInputElement;

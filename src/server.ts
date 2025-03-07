@@ -1,5 +1,6 @@
 import * as dotenv from 'dotenv';
 import express from 'express';
+import { Request, Response } from 'express';
 import path from 'path';
 import fs from 'fs';
 import webpack from 'webpack';
@@ -31,7 +32,12 @@ app.use(express.static(path.join(__dirname, '../../public')));
 
 app.use('/v1/links/', linksRouter);
 
-app.get('/', async (req, res) => {
+// Middleware to redirect root-level short URLs to the appropriate router
+app.get('/:shortUrl', (req: Request, res: Response) => {
+  res.redirect(`/v1/links/${req.params.shortUrl}`);
+});
+
+app.get('/', async (req: Request, res: Response) => {
   const indexFile = path.join(__dirname, './views', 'index.html');
 
   fs.readFile(indexFile, 'utf8', (err, data) => {

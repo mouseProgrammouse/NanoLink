@@ -1,10 +1,10 @@
 import express from 'express';
 import * as dotenv from 'dotenv';
 import { Request, Response } from 'express';
-import { addUrlRecord, getLastUrl } from '../service/db';
+import { addUrlRecord, getLongUrl, getShortUrl } from '../service/db';
 import bodyParser from 'body-parser';
-import { URL_LEN_FALLBACK } from '../utils/const';
-type LinkResponse = { shortUrl: string } | { error: string };
+import { LinkResponse, LongUrl, ShortUrl } from '../utils/type';
+import { isEmpty, shortenURL } from '../utils/util';
 
 const linksRouter = express.Router();
 
@@ -12,17 +12,22 @@ const jsonParser = bodyParser.json();
 
 dotenv.config();
 
-const URL_LEN = Number(process.env.URL_LEN) || URL_LEN_FALLBACK;
-
-/** Encode and take first URL_LEN chars */
-const generateShortCode = (url: string) => btoa(url).slice(0, URL_LEN);
+const BASE = process.env.BASE || '';
 
 linksRouter.get(
   '/:shortUrl',
-  async (req: Request<{ shortUrl: string }>, res: Response) => {
+  jsonParser,
+  async (req: Request<ShortUrl>, res: Response) => {
     try {
-      const lastUrl = await getLastUrl();
-      res.json({ lastUrl: lastUrl, req: req.params.shortUrl });
+      console.log('Requested Short Url', req.params.shortUrl);
+      const record = await getLongUrl(req.params.shortUrl);
+
+      if (record?.LONG_URL) {
+        console.log('Redirect to:', record.LONG_URL);
+        res.redirect(record.LONG_URL);
+      } else {
+        res.status(404).json({ error: 'URL not found' });
+      }
     } catch (err: unknown) {
       if (err instanceof Error) {
         res.status(500).json({ error: err.message });
@@ -36,20 +41,29 @@ linksRouter.get(
 linksRouter.post(
   '/',
   jsonParser,
-  (req: Request<{ longUrl: string }>, res: Response<LinkResponse>) => {
-    const shortUrl = generateShortCode(req.body.longUrl);
-    const longUrl = req.body.longUrl;
-    addUrlRecord(shortUrl, longUrl)
-      .then(() => {
-        res.json({ shortUrl });
-      })
-      .catch((error) => {
-        if (error instanceof Error) {
-          res.status(500).json({ error: error.message });
-        } else {
-          res.status(500).json({ error: 'An unknown error occurred' });
-        }
-      });
+  async (req: Request<LongUrl>, res: Response<LinkResponse>) => {
+    try {
+      const longUrl = req.body.longUrl;
+      const record = await getShortUrl(longUrl);
+
+      if (isEmpty(record)) {
+        const shortUrl = shortenURL(longUrl);
+        await addUrlRecord(shortUrl, longUrl);
+        res.json({ shortUrl: BASE + shortUrl });
+        return;
+      }
+
+      // If record exists:
+      if (record?.SHORT_URL) {
+        res.json({ shortUrl: BASE + record.SHORT_URL });
+      }
+    } catch (error) {
+      if (error instanceof Error) {
+        res.status(500).json({ error: error.message });
+      } else {
+        res.status(500).json({ error: 'An unknown error occurred' });
+      }
+    }
   },
 );
 
