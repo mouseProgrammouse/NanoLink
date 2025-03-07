@@ -35,7 +35,7 @@ linksRouter.get(
         console.log('Redirect to:', record.LONG_URL);
         res.redirect(record.LONG_URL);
       } else {
-        res.status(404).json({ error: 'URL not found' });
+        res.redirect('/?error=404');
       }
     } catch (err: unknown) {
       if (err instanceof Error) {
