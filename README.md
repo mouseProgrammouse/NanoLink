@@ -35,6 +35,24 @@ npm run setup-db
 ```
 The script will create the database, create the urls table if it doesn’t already exist, and insert two sample records.
 
+### Redis Setup
+
+This project uses Redis for caching. You need to install and start Redis before running the project.
+
+Install Redis on macOS using Homebrew:
+
+```sh
+brew install redis
+```
+
+Start Redis Server:
+
+```sh
+redis-server ./redis.conf
+```
+
+Ensure that Redis is running before starting the project.
+
 ### Development
 
 To start the development server with hot reloading:
