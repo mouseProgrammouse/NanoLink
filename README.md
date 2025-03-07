@@ -1,3 +1,7 @@
+<p align="right">
+  <img src="https://github.com/user-attachments/assets/3e1cd64d-2a06-4501-bd2d-c1e1d4566a6b" alt="parrot" width="88" height="88">
+</p>
+
 # NanoLink
 
 This is a practice project to build a simple yet functional URL shortener.
