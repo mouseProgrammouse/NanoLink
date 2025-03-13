@@ -16,18 +16,22 @@ dotenv.config();
 
 const PORT = process.env.PORT || 3000;
 const app = express();
-const compiler = webpack(webpackConfig as Configuration);
 
 connectDB();
 connectCache();
 
-// Enable webpack middleware for hot-reloads in development
-app.use(
-  webpackDevMiddleware(compiler, {
-    publicPath: webpackConfig?.output?.publicPath || '/',
-  }),
-);
-app.use(webpackHotMiddleware(compiler));
+if (process.env.ENV !== 'PRODUCTION') {
+  // Only setup webpack in development
+  const compiler = webpack(webpackConfig as Configuration);
+
+  app.use(
+    webpackDevMiddleware(compiler, {
+      publicPath: webpackConfig?.output?.publicPath || '/',
+    }),
+  );
+
+  app.use(webpackHotMiddleware(compiler));
+}
 
 // Serve static files from the public directory
 app.use(express.static(path.join(__dirname, '../../public')));

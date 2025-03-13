@@ -77,6 +77,14 @@ npm run build
 
 This compiles the TypeScript code and bundles it using Webpack, outputting the result to the dist directory.
 
+Install all the dependencies and setup database (if needed):
+
+```sh
+cd dis
+npm install --omit=dev
+npm run setup-db
+```
+
 To start the production server:
 
 ```sh
