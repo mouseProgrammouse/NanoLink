@@ -80,6 +80,7 @@ This compiles the TypeScript code and bundles it using Webpack, outputting the r
 Install all the dependencies and setup database (if needed):
 
 ```sh
+cd dis
 npm install --omit=dev
 npm run setup-db
 ```
