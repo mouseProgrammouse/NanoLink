@@ -3,12 +3,13 @@ import { Configuration, HotModuleReplacementPlugin } from 'webpack';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import CssMinimizerPlugin from 'css-minimizer-webpack-plugin';
 
-const mode =
-  process.env.NODE_ENV === 'production' ? 'production' : 'development';
+const isProd = process.env.ENV === 'PRODUCTION';
 
 const config: Configuration = {
-  mode,
-  entry: ['webpack-hot-middleware/client?reload=true', './src/client/index.ts'],
+  mode: isProd ? 'production' : 'development',
+  entry: isProd
+    ? './src/client/index.ts'
+    : ['webpack-hot-middleware/client?reload=true', './src/client/index.ts'],
   output: {
     path: path.resolve(__dirname, 'public'),
     filename: 'bundle.js',
@@ -31,13 +32,13 @@ const config: Configuration = {
     ],
   },
   plugins: [
-    new HotModuleReplacementPlugin(),
+    ...(isProd ? [] : [new HotModuleReplacementPlugin()]),
     new MiniCssExtractPlugin({
       filename: 'styles.css',
     }),
   ],
   optimization: {
-    minimize: true,
+    minimize: isProd,
     minimizer: [new CssMinimizerPlugin()],
   },
 };
