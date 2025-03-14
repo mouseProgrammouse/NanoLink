@@ -1,5 +1,5 @@
 import * as dotenv from 'dotenv';
-import express from 'express';
+import express, { NextFunction } from 'express';
 import { Request, Response } from 'express';
 import path from 'path';
 import fs from 'fs';
@@ -34,12 +34,23 @@ if (process.env.ENV !== 'PRODUCTION') {
 }
 
 // Serve static files from the public directory
-app.use(express.static(path.join(__dirname, '../../public')));
+app.use(express.static(path.join(__dirname, '../public')));
 
 app.use('/v1/links/', linksRouter);
 
 // Middleware to redirect root-level short URLs to the appropriate router
-app.get('/:shortUrl', (req: Request, res: Response) => {
+app.get('/:shortUrl', (req: Request, res: Response, next: NextFunction) => {
+  // Skip redirect logic for common static file extensions
+  if (
+    req.params.shortUrl.endsWith('.css') ||
+    req.params.shortUrl.endsWith('.js') ||
+    req.params.shortUrl.endsWith('.png') ||
+    req.params.shortUrl.endsWith('.jpg') ||
+    req.params.shortUrl.endsWith('.webp')
+  ) {
+    return next();
+  }
+
   res.redirect(`/v1/links/${req.params.shortUrl}`);
 });
 

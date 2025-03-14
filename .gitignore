@@ -24,3 +24,9 @@ database/
 
 # Cache
 dump.rdb
+
+# env
+.env
+
+# husky
+.husky
